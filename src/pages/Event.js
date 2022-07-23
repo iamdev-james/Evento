@@ -27,9 +27,11 @@ const Event = () => {
         <p className='flex gap-2 text-medium text-gray-400 py-4'><span><FaCalendar /></span>{ event.eventDate }</p>
       </div>
       <div className='flex flex-wrap gap-3 justify-center items-center'>
-        <button
-          className="bg-blue-300 text-gray-800 rounded-2xl text-sm font-medium p-4 hover:drop-shadow-xl"
-        >Generate Registration Link</button>
+        <Link to={`/generate-link/` + event.id}>
+          <button
+            className="bg-blue-300 text-gray-800 rounded-2xl text-sm font-medium p-4 hover:drop-shadow-xl"
+          >Generate Registration Link</button>
+        </Link>
         <Link to={`/create-outline/` + event.id}>
           <button
             type='button'

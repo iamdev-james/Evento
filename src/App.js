@@ -7,12 +7,16 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { useStateContext } from './contexts/ContextProvider';
 
 import './App.css';
-import { CreateEvent, CreateOutline, Dashboard, Event, Events } from './pages';
+import { CreateEvent, CreateOutline, Dashboard, Event, EventHomepage, Events, GenerateLink } from './pages';
+
+import Login from './pages/Authentication/Login';
+import Protected from './pages/Authentication/Protected';
+import SignUp from './pages/Authentication/SignUp';
 
 function App() {
-  const { menuActive } = useStateContext()
+  const { menuActive, isLoggedIn } = useStateContext()
 
-  return (
+  return isLoggedIn? (
     <div className="App">
       <BrowserRouter>
         <div className="flex relative dark:bg-main-dark-bg">
@@ -38,15 +42,18 @@ function App() {
           {/* Main Page */}
           <div>
             <Routes>
-              <Route path="/" element={ <Dashboard />} />
-              <Route path="/dashboard" element={ <Dashboard />} />
+              <Route path='/login' element={<Login />} />
+              <Route path="/" element={ <Protected><Dashboard /></Protected>} />
+              <Route path="/dashboard" element={ <Protected><Dashboard /></Protected> } />
 
               {/* Pages */}
-              <Route path="/events" element={ <Events />} />
-              <Route path="/event/:eventId" element={ <Event />} />
-              <Route path="/create-event" element={ <CreateEvent />} />
-              <Route path="/create-outline/:eventId" element={ <CreateOutline />} />
-
+              <Route path="/events" element={ <Protected><Events /></Protected>} />
+              <Route path="/event/:eventId" element={ <Protected><Event /></Protected>} />
+              <Route path="/create-event" element={ <Protected><CreateEvent /></Protected>} />
+              <Route path="/create-outline/:eventId" element={ <Protected><CreateOutline /></Protected> } />
+              <Route path="/generate-link/:eventId" element={ <Protected><GenerateLink /></Protected>} />
+        {/* Users Route to register for events */}
+              <Route path="/events/:eventId" element={ <EventHomepage />} />
               {/* Apps */}
               {/* <Route path="/kanban" element={ <Kanban />} />
               <Route path="/editor" element={ <Editor />} />
@@ -58,7 +65,17 @@ function App() {
         </div>
       </BrowserRouter>
     </div>
-  );
+  ) : (
+    <div>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Login />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/signup' element={<SignUp />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
+  )
 }
 
 export default App;

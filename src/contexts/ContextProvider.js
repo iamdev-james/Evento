@@ -5,6 +5,7 @@ const StateContext = createContext();
 export const ContextProvider = ({ children }) => {
   const [ menuActive, setMenuActive ] = useState(true)
   const [screenSize, setScreenSize] = useState(undefined)
+  const [ isLoggedIn, setIsLogged ] = useState(false)
 
   return (
     <StateContext.Provider
@@ -12,7 +13,9 @@ export const ContextProvider = ({ children }) => {
       menuActive,
       setMenuActive,
       screenSize,
-      setScreenSize
+      setScreenSize,
+      isLoggedIn,
+      setIsLogged
     }}
     >
       { children }
