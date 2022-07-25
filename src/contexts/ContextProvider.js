@@ -7,6 +7,7 @@ export const ContextProvider = ({ children }) => {
   const [screenSize, setScreenSize] = useState(undefined)
   const [ isLoggedIn, setIsLogged ] = useState(false)
   const [ token, setToken ] = useState('')
+  const [ adminData, setAdminData ] = useState('')
 
   return (
     <StateContext.Provider
@@ -18,7 +19,9 @@ export const ContextProvider = ({ children }) => {
       isLoggedIn,
       setIsLogged,
       token,
-      setToken
+      setToken,
+      adminData,
+      setAdminData
     }}
     >
       { children }

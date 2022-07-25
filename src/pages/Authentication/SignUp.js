@@ -1,18 +1,19 @@
 import React, { useState } from 'react'
 import { MdDashboardCustomize } from 'react-icons/md'
 
+import { useNavigate } from "react-router-dom";
+
 import swal from 'sweetalert';
 
 
 const SignUp = () => {
+  let navigate = useNavigate();
   const [ email, setEmail ] = useState()
   const [ name, setName ] = useState()
   const [ password, setPassword ] = useState()
 
   const myHeaders = new Headers();
   myHeaders.append('Content-Type', "application/json");
-  myHeaders.append('Access-Control-Allow-Origin', 'http://localhost:3000');
-  myHeaders.append('Access-Control-Allow-Credentials', 'true');
 
   const raw = JSON.stringify({
     "name": name,
@@ -29,10 +30,12 @@ const SignUp = () => {
 
   const response = (response) => {
     if (response.code === 200) {
-      swal("Regisration Successful, proceed to login", {
+      swal("Regisration Successful, redirecting to login", {
         icon: "success",
       });
+      return navigate('/login')
     } else {
+      console.log(response)
       swal({
         title: "Registration failed",
         text: "Unable to register, please try again later",
@@ -44,9 +47,22 @@ const SignUp = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!email || !name || !password) return
+    swal({
+      title: "Loading....",
+      text: "Please wait...",
+      icon: "info"
+    })
     fetch("https://evento-apis.herokuapp.com/user/register", requestOptions)
-    .then(response => response.text())
+    .then(response => response.json())
     .then(result => response(result))
+    .catch(error => {
+      console.log(error)
+      swal({
+        title: "An error occured",
+        text: "Please check you values and try again later",
+        icon: "error"
+      })
+    })
   }
 
   return (

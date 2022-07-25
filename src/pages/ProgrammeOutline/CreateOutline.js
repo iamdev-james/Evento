@@ -37,6 +37,12 @@ const CreateOutline = () => {
       <div>
         <p className='text-3xl font-bold mt-2 mb-10'>Schedule your event</p>
         <p className='text-gray-500 font-medium'>Creating outline for { event.eventName }</p>
+        <p className='mt-6 mb-3'>Event duration</p>
+        <input 
+          type="text"
+          onChange=""
+          className="rounded-2xl outline-none h-14 p-2 text-lg font-medium w-5/6 md:w-3/4"
+        />
         <div className='flex justify-between items-start font-medium text-gray-500 mt-6 mb-4'>
           <p>From..</p>
           <p>Programme</p>

@@ -40,7 +40,7 @@ const PersonalDetails = ({ prevStep, nextStep, handleChange, values }) => {
               />
             </div>
 
-            {/* Event color */}
+            {/* Event color
             <div>
               <p className='text-core font-medium text-gray-600 text-left mt-8 mb-2 ml-8 md:ml-24'>Event Color</p>
               <input 
@@ -49,7 +49,7 @@ const PersonalDetails = ({ prevStep, nextStep, handleChange, values }) => {
                 onChange={handleChange('eventcolor')}
                 className="rounded-2xl outline-none h-14 p-2 text-lg font-medium w-5/6 md:w-3/4 my-5"
               />
-            </div>
+            </div> */}
 
             {/* Event type */}
             <div>

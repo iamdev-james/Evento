@@ -1,17 +1,67 @@
 import React from 'react'
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'
 
+import { useNavigate } from "react-router-dom";
+
+import swal from 'sweetalert';
+import { useStateContext } from '../../contexts/ContextProvider';
+
+
 const Confirmation = ({ prevStep, nextStep, values }) => {
   console.log(values);
-  const { eventname, eventdate, eventlocation, eventdescription, eventimage, eventcolor, eventtype } = values
-  const Continue = e => {
-    e.preventDefault();
-    nextStep();
-  }
+  const { eventname, eventdate, eventlocation, eventdescription, eventimage, eventtype } = values
+  // const Continue = e => {
+  //   e.preventDefault();
+  //   nextStep();
+  // }
 
   const Previous = e => {
     e.preventDefault();
     prevStep();
+  }
+
+  const { token } = useStateContext()
+
+  let navigate = useNavigate();
+  const myHeaders = new Headers();
+	myHeaders.append("Authorization", token);
+
+  const raw = JSON.stringify({
+    "eventName" : eventname,
+    "eventDate" : eventdate,
+    "eventType": eventtype,
+    "eventDesc": eventdescription,
+    "eventTime": eventdate,
+    "eventLocation": eventlocation,
+  })
+
+  const requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: raw,
+    redirect: 'follow'
+  };
+
+  const confirmEvent = (response) => {
+    if (response.code === 200) {
+      swal("Regisration Successful, redirecting to login", {
+        icon: "success",
+      });
+      return navigate('/login')
+    } else {
+      console.log(response)
+      swal({
+        title: "Registration failed",
+        text: "Unable to register, please try again later",
+        icon: "error"
+      })
+    }
+  }
+
+  const createEvent = () => {
+    fetch('https://evento-apis.herokuapp.com/events/create', requestOptions)
+    .then(response => response.json())
+    .then(result => confirmEvent(result))
   }
 
   return (
@@ -40,10 +90,10 @@ const Confirmation = ({ prevStep, nextStep, values }) => {
           <p className='text-lg font-bold mb-3'>Event Image</p>
           <p className='text-sm font-medium text-gray-400 text-left'>{eventimage}</p>
         </div>
-        <div className='mb-5'>
+        {/* <div className='mb-5'>
           <p className='text-lg font-bold mb-3'>Event Color</p>
           <p className='text-sm font-medium text-gray-400 text-left'>{eventcolor}</p>
-        </div>
+        </div> */}
         <div className='mb-5'>
           <p className='text-lg font-bold mb-3'>Event Type</p>
           <p className='text-sm font-medium text-gray-400 text-left'>{eventtype}</p>
@@ -59,7 +109,7 @@ const Confirmation = ({ prevStep, nextStep, values }) => {
         Previous
       </button>
         <button 
-          onClick={ Continue }
+          onClick={ createEvent }
           type="submit"
           className='flex justify-center items-center bg-blue-400 hover:drop-shadow-xl hover:bg-blue-600 rounded-2xl outline-none h-14 p-2 text-lg font-medium w-2/5'
         >

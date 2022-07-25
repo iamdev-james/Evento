@@ -24,7 +24,7 @@ const NavButton = ({title, customFunc, icon, color, dotColor}) => (
 )
 
 const NavBar = () => {
-  const { setMenuActive, toggleNavModal, screenSize, setScreenSize } = useStateContext();
+  const { setMenuActive, toggleNavModal, screenSize, setScreenSize, adminData } = useStateContext();
 
   useEffect(() => {
     const handleScreenSize = () => setScreenSize(window.innerWidth);
@@ -44,7 +44,6 @@ const NavBar = () => {
       setMenuActive(true)
     }
   }, [screenSize, setMenuActive])
-
   return (
     <div className='flex justify-between p-2 md:mx-6 relative'>
       <NavButton
@@ -59,7 +58,7 @@ const NavBar = () => {
             <img src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZmlsZXxlbnwwfHwwfHw%3D&w=1000&q=80" alt='Profile-Img' className='rounded-full w-12 h-10' />
             <p>
               <span className='text-gray-400 text-14'>Hi, </span>{' '}
-              <span className='text-gray-400 font-bold ml-1 text-14'>James</span>
+              <span className='text-gray-400 font-bold ml-1 text-14'>{ adminData.response?.user?.username || '' }</span>
             </p>
           <MdKeyboardArrowDown />
           </div>

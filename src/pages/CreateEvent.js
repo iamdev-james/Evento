@@ -33,8 +33,8 @@ export default class Signup extends Component {
 
   render() {
     const { step } = this.state;
-    const { eventname, eventdate, eventlocation, eventdescription, eventimage, eventcolor, eventtype } = this.state;
-    const values = { eventname, eventdate, eventlocation, eventdescription, eventimage, eventcolor, eventtype }
+    const { eventname, eventdate, eventlocation, eventdescription, eventimage, eventtype } = this.state;
+    const values = { eventname, eventdate, eventlocation, eventdescription, eventimage, eventtype }
     
     switch(step) {
       case 1: 

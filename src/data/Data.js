@@ -44,7 +44,7 @@ export const earningData = [
   },
   {
     icon: <BsBoxSeam />,
-    amount: '15',
+    amount: '0',
     title: 'Outlines Created',
     iconColor: 'rgb(255, 244, 229)',
     iconBg: 'rgb(254, 201, 15)'

@@ -1,9 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+// import { useStateContext } from '../contexts/ContextProvider'
+
 import { events } from '../data/events'
 
 const Events = () => {
+  // const { adminData } = useStateContext();
+
   return (
     <div className='flex m-6 mt-24 md:mt-auto flex-wrap justify-center gap-6 md:gap-4 items-center'>
       {

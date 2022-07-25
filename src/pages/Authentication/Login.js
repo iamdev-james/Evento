@@ -12,7 +12,7 @@ import swal from 'sweetalert';
 
 const Login = () => {
   let navigate = useNavigate();
-  const { setIsLoggedIn, setToken } = useStateContext()
+  const { setIsLogged, setToken } = useStateContext()
 
   const [ email, setEmail ] = useState()
   const [ password, setPassword ] = useState()
@@ -36,7 +36,7 @@ const Login = () => {
 
   const response = (response) => {
     if (response.code === 200) {
-      setIsLoggedIn(true)
+      setIsLogged(true)
       swal("Login Successful, redirecting to dashboard", {
         icon: "success",
       });
@@ -55,8 +55,13 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!email || !password) return
+    swal({
+      title: "Loading....",
+      text: "Please wait...",
+      icon: "info"
+    })
     fetch("https://evento-apis.herokuapp.com/user/login", requestOptions)
-    .then(response => response.text())
+    .then(response => response.json())
     .then(result => response(result))
   }
 
